@@ -2,6 +2,7 @@ package br.dev.marcelo.conversor_temperatura.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -58,23 +59,29 @@ public class TelaConversor {
 		tela.getContentPane().add(lblSaida);
 		tela.getContentPane().add(lblErro);
 		
-//		para finalizar falta apenas verificar se o conteudo digitado na entrada é numero, 
-//		caso nao seja, fazer um jeito de aparecer a mensagem de erro na tela,
-//		falta também fazer um design melhor para a tela, após isso testar e entregar
-		
 		buttonKelvin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
 				String entrada = txtEntrada.getText();
 				
-				//casting -> conversão de um tipo para outro
-				double entradaDouble = Double.parseDouble(entrada);
-				
-				Temperatura temperatura = new Temperatura();
-				temperatura.setCelsius(entradaDouble);
-				resultado = Double.toString(temperatura.converterParaKelvin());
-				lblSaida.setText(resultado + " KELVIN");
+				if (entrada.matches(".*[^0-9].*")) {
+				    System.out.println("Digite um valor válido!");
+				    lblErro.setText("DIGITE UM VALOR VÁLIDO!");
+				    lblSaida.setText("");
+				    
+				} else {
+					
+					//casting -> conversão de um tipo para outro
+					double entradaDouble = Double.parseDouble(entrada);
+					
+					Temperatura temperatura = new Temperatura();
+					temperatura.setCelsius(entradaDouble);
+					resultado = Double.toString(temperatura.converterParaKelvin());
+					lblSaida.setText(resultado + " KELVIN");
+					lblErro.setText("");
+					
+				}
 				
 			}
 		});
@@ -85,14 +92,20 @@ public class TelaConversor {
 				
 				String entrada = txtEntrada.getText();
 				
-				//casting -> conversão de um tipo para outro
-				double entradaDouble = Double.parseDouble(entrada);
-				
-				Temperatura temperatura = new Temperatura();
-				temperatura.setCelsius(entradaDouble);
-				resultado = Double.toString(temperatura.converterParaFahreinheit());
-				lblSaida.setText(resultado + " FAHREINHEIT");
-				
+				if (entrada.matches(".*[^0-9].*")) {
+				    System.out.println("Digite um valor válido!");
+				    
+				} else {
+					
+					//casting -> conversão de um tipo para outro
+					double entradaDouble = Double.parseDouble(entrada);
+					
+					Temperatura temperatura = new Temperatura();
+					temperatura.setCelsius(entradaDouble);
+					resultado = Double.toString(temperatura.converterParaFahreinheit());
+					lblSaida.setText(resultado + " FAHREINHEIT");
+				}
+					
 			}
 		});
 		
